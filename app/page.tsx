@@ -630,6 +630,19 @@ export default function DentalImplantFunnel() {
         </div>
       </div>
 
+      {/* ── FOOTER POLICY LINKS ── */}
+      <footer style={s.footer}>
+        <a href="https://www.pallantadvanceddentistry.co.uk/privacy-policy" target="_blank" rel="noopener noreferrer" style={s.footerLink}>Privacy Policy</a>
+        <span style={s.footerDot}>·</span>
+        <a href="https://www.pallantadvanceddentistry.co.uk/terms-and-conditions" target="_blank" rel="noopener noreferrer" style={s.footerLink}>Terms & Conditions</a>
+        <span style={s.footerDot}>·</span>
+        <a href="https://www.pallantadvanceddentistry.co.uk/cookies-policy" target="_blank" rel="noopener noreferrer" style={s.footerLink}>Cookies Policy</a>
+        <span style={s.footerDot}>·</span>
+        <a href="https://www.pallantadvanceddentistry.co.uk/complaints-handling-policy" target="_blank" rel="noopener noreferrer" style={s.footerLink}>Complaints Policy</a>
+        <span style={s.footerDot}>·</span>
+        <a href="https://www.pallantadvanceddentistry.co.uk/environmental-policy/" target="_blank" rel="noopener noreferrer" style={s.footerLink}>Environmental Policy</a>
+      </footer>
+
       {/* ── STICKY CTA (mobile only) ── */}
       {!submitted && (
         <div style={s.stickyCta} className="sticky-cta">
@@ -947,5 +960,24 @@ const s: Record<string, React.CSSProperties> = {
   },
 
   trustItem: { display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: "var(--text-light)" },
+
+  footer: {
+    textAlign: "center" as const,
+    padding: "20px 16px 32px",
+    display: "flex",
+    flexWrap: "wrap" as const,
+    justifyContent: "center",
+    gap: "6px 0",
+  },
+  footerLink: {
+    fontSize: 11,
+    color: "var(--text-light)",
+    textDecoration: "none",
+    padding: "0 6px",
+  },
+  footerDot: {
+    fontSize: 11,
+    color: "var(--text-light)",
+  },
 
 };
