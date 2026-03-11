@@ -694,7 +694,7 @@ const s: Record<string, React.CSSProperties> = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     padding: "20px 20px 16px",
     position: "relative",
     overflow: "hidden",
