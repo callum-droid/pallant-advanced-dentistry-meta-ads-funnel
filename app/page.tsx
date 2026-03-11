@@ -692,7 +692,7 @@ const s: Record<string, React.CSSProperties> = {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    padding: "20px 20px 40px",
+    padding: "20px 20px 16px",
     position: "relative",
     overflow: "hidden",
   },
@@ -955,7 +955,7 @@ const s: Record<string, React.CSSProperties> = {
   successText: { color: "var(--text-muted)", fontSize: 14, lineHeight: 1.6, maxWidth: 340, margin: "0 auto" },
 
   trustRow: {
-    display: "flex", justifyContent: "center", gap: 24, marginTop: 20,
+    display: "flex", justifyContent: "center", gap: 24, marginTop: 12,
     animation: "fadeDown 0.6s ease-out 0.3s both",
   },
 
