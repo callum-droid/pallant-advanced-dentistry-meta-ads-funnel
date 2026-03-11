@@ -68,12 +68,6 @@ export default function DentalImplantFunnel() {
 
   // ─── EXIT INTENT POPUP ────────────────────────────────────────
 
-  // ─── SCROLL TO TOP ON STEP CHANGE ──────────────────────────────
-  useEffect(() => {
-    if (cardRef.current) {
-      cardRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }, [currentStep]);
 
   // ─── TAP FEEDBACK STATE ─────────────────────────────────────────
   const [tappedOption, setTappedOption] = useState<string | null>(null);
