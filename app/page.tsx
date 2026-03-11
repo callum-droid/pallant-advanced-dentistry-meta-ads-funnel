@@ -963,7 +963,7 @@ const s: Record<string, React.CSSProperties> = {
 
   footer: {
     textAlign: "center" as const,
-    padding: "20px 16px 32px",
+    padding: "8px 16px 24px",
     display: "flex",
     flexWrap: "wrap" as const,
     justifyContent: "center",
