@@ -250,7 +250,7 @@ export default function DentalImplantFunnel() {
         /* ── MOBILE STYLES ── */
         @media (max-width: 640px) {
           .page-wrapper {
-            padding: 12px 14px 100px !important;
+            padding: 12px 14px 16px !important;
             justify-content: flex-start !important;
             align-items: stretch !important;
           }
