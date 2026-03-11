@@ -316,6 +316,9 @@ export default function DentalImplantFunnel() {
           .inline-cta {
             display: none !important;
           }
+          footer {
+            padding-bottom: calc(80px + env(safe-area-inset-bottom)) !important;
+          }
         }
 
         @media (min-width: 641px) {
