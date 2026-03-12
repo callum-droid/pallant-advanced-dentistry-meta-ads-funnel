@@ -437,7 +437,10 @@ export default function DentalImplantFunnel() {
                       placeholder={field.placeholder}
                       value={formData[field.id]}
                       onChange={(e) => {
-                        setFormData((prev) => ({ ...prev, [field.id]: e.target.value }));
+                        const value = field.id === "phone"
+                          ? e.target.value.replace(/[^\d\s\+\-\(\)]/g, "")
+                          : e.target.value;
+                        setFormData((prev) => ({ ...prev, [field.id]: value }));
                         setErrors((prev) => { const next = { ...prev }; delete next[field.id]; return next; });
                       }}
                       style={{
