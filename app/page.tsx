@@ -662,7 +662,7 @@ export default function DentalImplantFunnel() {
             <div style={s.videoWrap}>
               <p style={s.videoTitle}>Are implants the right option for you?</p>
               <iframe
-                src="https://www.youtube.com/embed/rxoTVdsSQKI"
+                src="https://www.youtube.com/embed/rxoTVdsSQKI?mute=1"
                 title="Pallant Advanced Dentistry"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
