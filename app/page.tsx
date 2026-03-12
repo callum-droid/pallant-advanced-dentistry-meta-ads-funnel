@@ -422,15 +422,12 @@ export default function DentalImplantFunnel() {
                 <p style={s.stepSubtitle}>Enter your details so we can personalise your implant consultation</p>
 
                 {([
-                  { id: "firstName", label: "First Name", placeholder: "e.g. James", type: "text", inputMode: "text" as const },
-                  { id: "lastName", label: "Last Name", placeholder: "e.g. Harrison", type: "text", inputMode: "text" as const },
-                  { id: "email", label: "Email Address", placeholder: "james@example.com", type: "email", inputMode: "email" as const },
-                  { id: "phone", label: "Phone Number", placeholder: "e.g. 07700 900000", type: "tel", inputMode: "tel" as const },
+                  { id: "firstName", label: "First Name", placeholder: "First Name", type: "text", inputMode: "text" as const },
+                  { id: "lastName", label: "Last Name", placeholder: "Last Name", type: "text", inputMode: "text" as const },
+                  { id: "email", label: "Email Address", placeholder: "Email Address", type: "email", inputMode: "email" as const },
+                  { id: "phone", label: "Phone Number", placeholder: "Phone Number", type: "tel", inputMode: "tel" as const },
                 ] as const).map((field) => (
                   <div key={field.id} style={s.fieldGroup}>
-                    <label style={s.label}>
-                      {field.label} <span style={{ color: "var(--error)", marginLeft: 2 }}>*</span>
-                    </label>
                     <input
                       type={field.type}
                       inputMode={field.inputMode}
