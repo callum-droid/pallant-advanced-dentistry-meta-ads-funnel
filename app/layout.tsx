@@ -9,6 +9,9 @@ export const metadata: Metadata = {
     index: false,
     follow: false,
   },
+  icons: {
+    icon: "https://www.pallantadvanceddentistry.co.uk/application/files/tio_files/5017/0617/8527/pallant-favicon.png",
+  },
 };
 
 export const viewport: Viewport = {

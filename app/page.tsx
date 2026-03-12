@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 
 // ─── TYPES ────────────────────────────────────────────────────────
 interface FormData {
@@ -365,38 +365,45 @@ export default function DentalImplantFunnel() {
           </div>
 
           {!submitted && (
-            <>
-              {/* Desktop step labels */}
-              <div style={s.stepLabelRow} className="step-labels-desktop">
-                {STEP_LABELS.map((label, i) => (
-                  <span key={label} style={{ ...s.stepLabelText, color: i + 1 === currentStep ? "var(--primary)" : "var(--text-light)" }}>
-                    {label}
-                  </span>
-                ))}
-              </div>
-
-              {/* Mobile compact indicator */}
-              <div style={s.mobileStepIndicator} className="step-indicator-mobile">
-                <span style={s.mobileStepText}>
-                  Step {currentStep} of 4 — <strong>{STEP_LABELS[currentStep - 1]}</strong>
-                </span>
-              </div>
-
-              {/* Progress bar */}
-              <div style={s.progressBar}>
-                {[1, 2, 3, 4].map((step) => (
-                  <div key={step} style={{
-                    ...s.progressStep,
-                    background: step < currentStep ? "var(--accent)" : step === currentStep ? "var(--primary)" : "var(--border)",
-                    boxShadow: step === currentStep ? "0 1px 6px rgba(26,63,82,0.3)" : "none",
-                  }} />
-                ))}
-              </div>
-            </>
+            <div style={s.stepper}>
+              {STEP_LABELS.map((label, i) => {
+                const step = i + 1;
+                const isComplete = step < currentStep;
+                const isActive = step === currentStep;
+                return (
+                  <React.Fragment key={label}>
+                    <div style={s.stepperItem}>
+                      <div style={{
+                        ...s.stepperCircle,
+                        background: isComplete ? "var(--accent)" : isActive ? "var(--primary)" : "transparent",
+                        borderColor: isComplete ? "var(--accent)" : isActive ? "var(--primary)" : "var(--border)",
+                        color: isComplete || isActive ? "#fff" : "var(--text-light)",
+                      }}>
+                        {isComplete ? "✓" : step}
+                      </div>
+                      <span style={{
+                        ...s.stepperLabel,
+                        color: isActive ? "var(--primary)" : isComplete ? "var(--accent)" : "var(--text-light)",
+                        fontWeight: isActive ? 700 : 500,
+                      }}>
+                        {label}
+                      </span>
+                    </div>
+                    {step < 4 && (
+                      <div style={{
+                        ...s.stepperLine,
+                        background: step < currentStep ? "var(--accent)" : "var(--border)",
+                      }} />
+                    )}
+                  </React.Fragment>
+                );
+              })}
+            </div>
           )}
 
           {/* ── CARD ── */}
           <div ref={cardRef} style={s.card} className="form-card">
+
             <div style={s.cardTopBorder} />
 
             {/* STEP 1: Contact Details */}
@@ -630,6 +637,19 @@ export default function DentalImplantFunnel() {
             <TrustBadge icon="check" text="Free Consultation" />
             <TrustBadge icon="clock" text="2 Min to Complete" />
           </div>
+
+          {/* YouTube Short — step 1 only */}
+          {currentStep === 1 && !submitted && (
+            <div style={s.videoWrap}>
+              <iframe
+                src="https://www.youtube.com/embed/rxoTVdsSQKI"
+                title="Pallant Advanced Dentistry"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                style={s.videoFrame}
+              />
+            </div>
+          )}
         </div>
       </div>
 
@@ -764,37 +784,35 @@ const s: Record<string, React.CSSProperties> = {
     border: "1px solid rgba(184,177,117,0.25)",
   },
 
-  stepLabelRow: {
-    display: "flex", justifyContent: "space-between",
-    marginBottom: 8, padding: "0 4px",
+  stepper: {
+    display: "flex", alignItems: "center",
+    marginBottom: 28,
     animation: "fadeDown 0.6s ease-out 0.1s both",
   },
 
-  stepLabelText: {
-    fontSize: 12, fontWeight: 600, textTransform: "uppercase",
-    letterSpacing: "0.08em", transition: "color 0.3s",
+  stepperItem: {
+    display: "flex", flexDirection: "column", alignItems: "center", gap: 6,
+    flexShrink: 0,
   },
 
-  mobileStepIndicator: {
-    display: "none",
-    justifyContent: "center",
-    marginBottom: 8,
-    animation: "fadeDown 0.6s ease-out 0.1s both",
+  stepperCircle: {
+    width: 32, height: 32, borderRadius: "50%",
+    border: "2px solid",
+    display: "flex", alignItems: "center", justifyContent: "center",
+    fontSize: 13, fontWeight: 700,
+    transition: "background 0.4s, border-color 0.4s, color 0.4s",
   },
 
-  mobileStepText: {
-    fontSize: 13, color: "var(--text-muted)", fontWeight: 500,
+  stepperLabel: {
+    fontSize: 11, textTransform: "uppercase" as const,
+    letterSpacing: "0.07em", transition: "color 0.4s",
+    textAlign: "center" as const, whiteSpace: "nowrap" as const,
   },
 
-  progressBar: {
-    display: "flex", alignItems: "center", gap: 6,
-    marginBottom: 24, padding: "0 4px",
-    animation: "fadeDown 0.6s ease-out 0.1s both",
-  },
-
-  progressStep: {
-    flex: 1, height: 5, borderRadius: 100,
-    transition: "background 0.5s ease, box-shadow 0.5s ease",
+  stepperLine: {
+    flex: 1, height: 2, borderRadius: 2,
+    transition: "background 0.4s",
+    margin: "0 6px", marginBottom: 22,
   },
 
   card: {
@@ -960,6 +978,17 @@ const s: Record<string, React.CSSProperties> = {
   trustRow: {
     display: "flex", justifyContent: "center", gap: 24, marginTop: 12,
     animation: "fadeDown 0.6s ease-out 0.3s both",
+  },
+
+  videoWrap: {
+    marginTop: 20,
+    display: "flex", justifyContent: "center",
+    animation: "fadeIn 0.6s ease-out 0.3s both",
+  },
+
+  videoFrame: {
+    width: 315, height: 560,
+    border: "none", borderRadius: 12,
   },
 
   trustItem: { display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: "var(--text-light)" },
