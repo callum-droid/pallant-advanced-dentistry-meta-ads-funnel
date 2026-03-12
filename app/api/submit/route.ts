@@ -17,7 +17,6 @@ export async function POST(req: NextRequest) {
     custom22: body.treatment ?? "",
     custom23: body.timeline ?? "",
     custom24: body.previousTreatment ?? "",
-    custom25: "Meta Ads Funnel",
   });
 
   const response = await fetch(triggerUrl, {
