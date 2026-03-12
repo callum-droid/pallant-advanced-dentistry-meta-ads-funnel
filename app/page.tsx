@@ -166,12 +166,20 @@ export default function DentalImplantFunnel() {
   };
 
   // ─── SUBMIT ───────────────────────────────────────────────────
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!validateStep(4)) return;
     setSubmitting(true);
-    const finalData = { ...formData, completedSteps: 4, submittedAt: new Date().toISOString() };
-    console.log("✅ FULL FORM SUBMITTED:", JSON.stringify(finalData, null, 2));
-    setTimeout(() => { setSubmitted(true); setSubmitting(false); }, 1200);
+    try {
+      await fetch("/api/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+    } catch (e) {
+      console.error("Submission error:", e);
+    }
+    setSubmitted(true);
+    setSubmitting(false);
   };
 
   // ─── RENDER ───────────────────────────────────────────────────
