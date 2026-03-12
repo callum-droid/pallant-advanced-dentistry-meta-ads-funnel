@@ -125,6 +125,7 @@ export default function DentalImplantFunnel() {
     }
     if (step === 2 && formData.concerns.length === 0) newErrors.concerns = "Please select at least one option";
     if (step === 3 && !formData.treatment) newErrors.treatment = "Please select an option";
+    if (step === 3 && !formData.previousTreatment) newErrors.previousTreatment = "Please answer this question";
     if (step === 4 && !formData.timeline) newErrors.timeline = "Please select a timeline";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -537,6 +538,39 @@ export default function DentalImplantFunnel() {
                 </div>
                 {errors.treatment && <p style={s.selectionError}>{errors.treatment}</p>}
 
+                <div style={{ marginTop: 20 }}>
+                  <label style={s.label}>Have you had any teeth extracted or removed previously?</label>
+                  <div style={{ ...s.optionList, marginTop: 8 }}>
+                    {["Yes", "No"].map((opt) => {
+                      const val = opt.toLowerCase();
+                      const selected = formData.previousTreatment === val;
+                      const isTapped = tappedOption === `prev-${val}`;
+                      return (
+                        <div key={val} onClick={() => {
+                          triggerTap(`prev-${val}`);
+                          setFormData((prev) => ({ ...prev, previousTreatment: val }));
+                        }} className="option-item-touch" style={{
+                          ...s.optionItem,
+                          borderColor: selected ? "var(--primary)" : "var(--border)",
+                          background: selected ? "rgba(26,63,82,0.06)" : "var(--bg)",
+                          boxShadow: selected ? "0 0 0 3px rgba(26,63,82,0.1)" : "none",
+                          animation: isTapped ? "tapBounce 0.2s ease-out" : "none",
+                        }}>
+                          <div style={{
+                            ...s.radioCircle,
+                            borderColor: selected ? "var(--primary)" : "var(--border)",
+                            background: selected ? "var(--primary)" : "transparent",
+                          }}>
+                            {selected && <div style={s.radioDot} />}
+                          </div>
+                          <span style={s.optionText}>{opt}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  {errors.previousTreatment && <p style={s.selectionError}>{errors.previousTreatment}</p>}
+                </div>
+
                 <p style={s.stepEncouragement}>Nearly there — one final step!</p>
 
                 <div style={s.btnRow} className="btn-row-mobile inline-cta">
@@ -577,38 +611,6 @@ export default function DentalImplantFunnel() {
                   })}
                 </div>
                 {errors.timeline && <p style={s.selectionError}>{errors.timeline}</p>}
-
-                <div style={{ marginTop: 20 }}>
-                  <label style={s.label}>Have you had any teeth extracted or removed previously?</label>
-                  <div style={{ ...s.optionList, marginTop: 8 }}>
-                    {["Yes", "No"].map((opt) => {
-                      const val = opt.toLowerCase();
-                      const selected = formData.previousTreatment === val;
-                      const isTapped = tappedOption === `prev-${val}`;
-                      return (
-                        <div key={val} onClick={() => {
-                          triggerTap(`prev-${val}`);
-                          setFormData((prev) => ({ ...prev, previousTreatment: val }));
-                        }} className="option-item-touch" style={{
-                          ...s.optionItem,
-                          borderColor: selected ? "var(--primary)" : "var(--border)",
-                          background: selected ? "rgba(26,63,82,0.06)" : "var(--bg)",
-                          boxShadow: selected ? "0 0 0 3px rgba(26,63,82,0.1)" : "none",
-                          animation: isTapped ? "tapBounce 0.2s ease-out" : "none",
-                        }}>
-                          <div style={{
-                            ...s.radioCircle,
-                            borderColor: selected ? "var(--primary)" : "var(--border)",
-                            background: selected ? "var(--primary)" : "transparent",
-                          }}>
-                            {selected && <div style={s.radioDot} />}
-                          </div>
-                          <span style={s.optionText}>{opt}</span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
 
                 <div style={s.btnRow} className="btn-row-mobile inline-cta">
                   <button style={s.btnSecondary} onClick={prevStep}>← Back</button>
