@@ -134,6 +134,11 @@ export default function DentalImplantFunnel() {
       Object.keys(newErrors).forEach((k) => { shaking[k] = true; });
       setShakeFields(shaking);
       setTimeout(() => setShakeFields({}), 500);
+      setTimeout(() => {
+        const firstKey = Object.keys(newErrors)[0];
+        const el = document.querySelector(`[data-error="${firstKey}"]`);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 50);
     }
     return Object.keys(newErrors).length === 0;
   };
@@ -460,7 +465,7 @@ export default function DentalImplantFunnel() {
                         boxShadow: errors[field.id] ? "0 0 0 3px rgba(209,67,67,0.1)" : "none",
                       }}
                     />
-                    {errors[field.id] && <span style={s.fieldError}>{errors[field.id]}</span>}
+                    {errors[field.id] && <span data-error={field.id} style={s.fieldError}>{errors[field.id]}</span>}
                   </div>
                 ))}
 
@@ -483,7 +488,7 @@ export default function DentalImplantFunnel() {
               <div style={{ animation: "fadeIn 0.4s ease-out" }}>
                 <h2 style={s.stepTitle}>What&apos;s brought you here today?</h2>
                 <p style={s.stepSubtitle}>Select the reasons you&apos;re considering dental implants (choose all that apply)</p>
-                {errors.concerns && <p style={s.selectionErrorTop}>{errors.concerns}</p>}
+                {errors.concerns && <p data-error="concerns" style={s.selectionErrorTop}>{errors.concerns}</p>}
 
                 <div style={{ ...s.optionGrid, animation: shakeFields.concerns ? "shake 0.5s ease-out" : "none" }} className="concern-grid">
                   {CONCERN_OPTIONS.map((opt) => {
@@ -525,7 +530,7 @@ export default function DentalImplantFunnel() {
               <div style={{ animation: "fadeIn 0.4s ease-out" }}>
                 <h2 style={s.stepTitle}>Which treatment interests you?</h2>
                 <p style={s.stepSubtitle}>Select the implant option you&apos;d like to explore</p>
-                {errors.treatment && <p style={s.selectionErrorTop}>{errors.treatment}</p>}
+                {errors.treatment && <p data-error="treatment" style={s.selectionErrorTop}>{errors.treatment}</p>}
 
                 <div style={{ ...s.optionList, animation: shakeFields.treatment ? "shake 0.5s ease-out" : "none" }}>
                   {TREATMENT_OPTIONS.map((opt) => {
@@ -554,7 +559,7 @@ export default function DentalImplantFunnel() {
 
                 <div style={{ marginTop: 20 }}>
                   <label style={s.label}>Have you had any teeth extracted or removed previously?</label>
-                  {errors.previousTreatment && <p style={s.selectionErrorTop}>{errors.previousTreatment}</p>}
+                  {errors.previousTreatment && <p data-error="previousTreatment" style={s.selectionErrorTop}>{errors.previousTreatment}</p>}
                   <div style={{ ...s.optionList, marginTop: 8, animation: shakeFields.previousTreatment ? "shake 0.5s ease-out" : "none" }}>
                     {["Yes", "No"].map((opt) => {
                       const val = opt.toLowerCase();
@@ -599,7 +604,7 @@ export default function DentalImplantFunnel() {
               <div style={{ animation: "fadeIn 0.4s ease-out" }}>
                 <h2 style={s.stepTitle}>Your timeline</h2>
                 <p style={s.stepSubtitle}>When are you hoping to start treatment?</p>
-                {errors.timeline && <p style={s.selectionErrorTop}>{errors.timeline}</p>}
+                {errors.timeline && <p data-error="timeline" style={s.selectionErrorTop}>{errors.timeline}</p>}
 
                 <div style={{ ...s.optionList, animation: shakeFields.timeline ? "shake 0.5s ease-out" : "none" }}>
                   {TIMELINE_OPTIONS.map((opt) => {
