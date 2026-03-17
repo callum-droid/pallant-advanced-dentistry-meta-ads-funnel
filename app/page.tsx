@@ -61,6 +61,7 @@ export default function DentalImplantFunnel() {
     submittedAt: null,
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [shakeFields, setShakeFields] = useState<Record<string, boolean>>({});
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const lastSavedStep = useRef(0);
@@ -128,6 +129,12 @@ export default function DentalImplantFunnel() {
     if (step === 3 && !formData.previousTreatment) newErrors.previousTreatment = "Please answer this question";
     if (step === 4 && !formData.timeline) newErrors.timeline = "Please select a timeline";
     setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) {
+      const shaking: Record<string, boolean> = {};
+      Object.keys(newErrors).forEach((k) => { shaking[k] = true; });
+      setShakeFields(shaking);
+      setTimeout(() => setShakeFields({}), 500);
+    }
     return Object.keys(newErrors).length === 0;
   };
 
@@ -249,6 +256,13 @@ export default function DentalImplantFunnel() {
         @keyframes pulse {
           0%, 100% { opacity: 1; }
           50% { opacity: 0.6; }
+        }
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          20% { transform: translateX(-6px); }
+          40% { transform: translateX(6px); }
+          60% { transform: translateX(-4px); }
+          80% { transform: translateX(4px); }
         }
         @keyframes tapBounce {
           0% { transform: scale(1); }
@@ -469,8 +483,9 @@ export default function DentalImplantFunnel() {
               <div style={{ animation: "fadeIn 0.4s ease-out" }}>
                 <h2 style={s.stepTitle}>What&apos;s brought you here today?</h2>
                 <p style={s.stepSubtitle}>Select the reasons you&apos;re considering dental implants (choose all that apply)</p>
+                {errors.concerns && <p style={s.selectionErrorTop}>{errors.concerns}</p>}
 
-                <div style={s.optionGrid} className="concern-grid">
+                <div style={{ ...s.optionGrid, animation: shakeFields.concerns ? "shake 0.5s ease-out" : "none" }} className="concern-grid">
                   {CONCERN_OPTIONS.map((opt) => {
                     const selected = formData.concerns.includes(opt.value);
                     const isTapped = tappedOption === `concern-${opt.value}`;
@@ -495,7 +510,6 @@ export default function DentalImplantFunnel() {
                     );
                   })}
                 </div>
-                {errors.concerns && <p style={s.selectionError}>{errors.concerns}</p>}
 
                 <p style={s.stepEncouragement}>Great progress — just 2 quick questions left!</p>
 
@@ -511,8 +525,9 @@ export default function DentalImplantFunnel() {
               <div style={{ animation: "fadeIn 0.4s ease-out" }}>
                 <h2 style={s.stepTitle}>Which treatment interests you?</h2>
                 <p style={s.stepSubtitle}>Select the implant option you&apos;d like to explore</p>
+                {errors.treatment && <p style={s.selectionErrorTop}>{errors.treatment}</p>}
 
-                <div style={s.optionList}>
+                <div style={{ ...s.optionList, animation: shakeFields.treatment ? "shake 0.5s ease-out" : "none" }}>
                   {TREATMENT_OPTIONS.map((opt) => {
                     const selected = formData.treatment === opt.value;
                     const isTapped = tappedOption === `treatment-${opt.value}`;
@@ -536,11 +551,11 @@ export default function DentalImplantFunnel() {
                     );
                   })}
                 </div>
-                {errors.treatment && <p style={s.selectionError}>{errors.treatment}</p>}
 
                 <div style={{ marginTop: 20 }}>
                   <label style={s.label}>Have you had any teeth extracted or removed previously?</label>
-                  <div style={{ ...s.optionList, marginTop: 8 }}>
+                  {errors.previousTreatment && <p style={s.selectionErrorTop}>{errors.previousTreatment}</p>}
+                  <div style={{ ...s.optionList, marginTop: 8, animation: shakeFields.previousTreatment ? "shake 0.5s ease-out" : "none" }}>
                     {["Yes", "No"].map((opt) => {
                       const val = opt.toLowerCase();
                       const selected = formData.previousTreatment === val;
@@ -568,7 +583,6 @@ export default function DentalImplantFunnel() {
                       );
                     })}
                   </div>
-                  {errors.previousTreatment && <p style={s.selectionError}>{errors.previousTreatment}</p>}
                 </div>
 
                 <p style={s.stepEncouragement}>Nearly there — one final step!</p>
@@ -585,8 +599,9 @@ export default function DentalImplantFunnel() {
               <div style={{ animation: "fadeIn 0.4s ease-out" }}>
                 <h2 style={s.stepTitle}>Your timeline</h2>
                 <p style={s.stepSubtitle}>When are you hoping to start treatment?</p>
+                {errors.timeline && <p style={s.selectionErrorTop}>{errors.timeline}</p>}
 
-                <div style={s.optionList}>
+                <div style={{ ...s.optionList, animation: shakeFields.timeline ? "shake 0.5s ease-out" : "none" }}>
                   {TIMELINE_OPTIONS.map((opt) => {
                     const selected = formData.timeline === opt.value;
                     const isTapped = tappedOption === `timeline-${opt.value}`;
@@ -610,8 +625,6 @@ export default function DentalImplantFunnel() {
                     );
                   })}
                 </div>
-                {errors.timeline && <p style={s.selectionError}>{errors.timeline}</p>}
-
                 <div style={s.btnRow} className="btn-row-mobile inline-cta">
                   <button style={s.btnSecondary} onClick={prevStep}>← Back</button>
                   <button style={{
@@ -921,6 +934,7 @@ const s: Record<string, React.CSSProperties> = {
   optionText: { fontSize: 14, fontWeight: 500, color: "var(--text)" },
 
   selectionError: { fontSize: 12, color: "var(--error)", marginTop: -10, marginBottom: 12 },
+  selectionErrorTop: { fontSize: 13, color: "var(--error)", marginBottom: 10, fontWeight: 500 },
 
   btnRow: { display: "flex", gap: 10, marginTop: 28 },
 
