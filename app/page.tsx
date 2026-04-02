@@ -438,7 +438,7 @@ export default function DentalImplantFunnel() {
             {currentStep === 1 && !submitted && (
               <div style={{ animation: "fadeIn 0.4s ease-out" }}>
                 <h2 style={s.stepTitle}>Let&apos;s get started</h2>
-                <p style={s.stepSubtitle}>Enter your details so we can personalise your implant consultation</p>
+                <p style={s.stepSubtitle}>Enter your details so we can personalise your dental implant consultation</p>
 
                 {([
                   { id: "firstName", label: "First Name", placeholder: "First Name", type: "text", inputMode: "text" as const },
@@ -529,7 +529,7 @@ export default function DentalImplantFunnel() {
             {currentStep === 3 && !submitted && (
               <div style={{ animation: "fadeIn 0.4s ease-out" }}>
                 <h2 style={s.stepTitle}>Which treatment interests you?</h2>
-                <p style={s.stepSubtitle}>Select the implant option you&apos;d like to explore</p>
+                <p style={s.stepSubtitle}>Select the dental implant option you&apos;d like to explore</p>
                 {errors.treatment && <p data-error="treatment" style={s.selectionErrorTop}>{errors.treatment}</p>}
 
                 <div style={{ ...s.optionList, animation: shakeFields.treatment ? "shake 0.5s ease-out" : "none" }}>
