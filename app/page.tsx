@@ -646,23 +646,16 @@ export default function DentalImplantFunnel() {
             {/* SUCCESS */}
             {submitted && (
               <div style={{ animation: "scaleIn 0.5s ease-out" }}>
-                <div style={{ textAlign: "center", paddingBottom: 16 }}>
+                <div style={{ textAlign: "center", padding: "32px 0" }}>
                   <div style={s.successIcon}>
                     <svg viewBox="0 0 24 24" width={32} height={32} fill="none" stroke="white" strokeWidth={2.5}>
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
                   </div>
-                  <h2 style={s.successTitle}>One Last Step — Book Your Consultation</h2>
+                  <h2 style={s.successTitle}>Thank You for Your Enquiry</h2>
                   <p style={s.successText}>
-                    Choose a date and time that suits you below. Our team at Pallant Advanced Dentistry will confirm your free implant consultation.
+                    A member of our team at Pallant Advanced Dentistry will be in touch shortly to arrange your free dental implant consultation.
                   </p>
-                </div>
-                <div style={s.calendlyWrap}>
-                  <iframe
-                    src={`https://calendly.com/megangoring/free-tc-chi?name=${encodeURIComponent((formData.firstName + " " + formData.lastName).trim())}&email=${encodeURIComponent(formData.email)}&a1=${encodeURIComponent(formData.phone)}`}
-                    title="Book your consultation"
-                    style={s.calendlyFrame}
-                  />
                 </div>
               </div>
             )}
@@ -1014,15 +1007,6 @@ const s: Record<string, React.CSSProperties> = {
 
   successText: { color: "var(--text-muted)", fontSize: 14, lineHeight: 1.6, maxWidth: 340, margin: "0 auto" },
 
-  calendlyWrap: {
-    margin: "0 -32px -36px",
-    borderTop: "1px solid var(--border)",
-  },
-
-  calendlyFrame: {
-    width: "100%", height: 700,
-    border: "none",
-  },
 
   trustRow: {
     display: "flex", justifyContent: "center", gap: 24, marginTop: 12,
